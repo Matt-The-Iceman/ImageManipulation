@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.awt.Desktop;
 import java.io.*;
 
 /**
@@ -98,6 +99,7 @@ public class imgManipulate{
 			/*
 			 * the following segment will save the new matrix under the original title + "_edit"
 			 */
+			
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(inFileName + "_edit.pgm"));
 				PrintWriter writerPrint = new PrintWriter(writer); //makes file writing easier
@@ -110,7 +112,18 @@ public class imgManipulate{
 				writerPrint.close();
 				writer.close();
 				
-				System.out.println("Saved: " + inFileName + "_edit.pgm at: " + System.getProperty("user.dir")); //notifies user of successful save
+				//open file to desktop
+				System.out.print("Would you like to open the new image after saving? (y/n): ");
+				String cont = in.nextLine();
+				
+				if(cont.equalsIgnoreCase("y") || cont.equalsIgnoreCase("yes")) {
+					File file = new File(inFileName + "_edit.pgm");
+					Desktop desk = Desktop.getDesktop();;
+					desk.open(file);
+				}
+				
+				//notify user of successful save
+				System.out.println("Saved " + inFileName + "_edit.pgm at: " + System.getProperty("user.dir")); //notifies user of successful save
 				
 			} catch (IOException e) {
 				System.err.println("Error saving file. Try again.");
